@@ -15,7 +15,9 @@
     box-shadow: 0 20px 60px rgba(14,17,34,.12); text-align: center; }
   .brand { display: flex; align-items: center; justify-content: center; gap: 8px; font-weight: 700; margin-bottom: 20px; }
   .brand img { width: 28px; height: 28px; border-radius: 7px; }
-  #art { display: none; width: 160px; height: 160px; object-fit: cover; border-radius: 24px; margin: 0 auto 16px; background: #eee; }
+  #art { display: none; width: 160px; height: 160px; object-fit: contain; border-radius: 24px; margin: 0 auto 16px; background: #fff; }
+  #placeholder { display: none; width: 160px; height: 160px; border-radius: 24px; margin: 0 auto 16px; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1A1F3A, #0B0D1A); color: var(--amber); font-size: 72px; font-weight: 700; }
   #kind { color: var(--amber); font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
   h1 { font-size: 24px; line-height: 1.2; margin: 6px 0 4px; }
   #subtitle { color: var(--muted); margin: 0 0 20px; }
@@ -28,6 +30,7 @@
 <body data-kind="p">
   <main class="card">
     <div class="brand"><img src="../icon.png" alt="">CarWave</div>
+    <div id="placeholder" aria-hidden="true"></div>
     <img id="art" alt="">
     <div id="kind"></div>
     <h1 id="title"></h1>

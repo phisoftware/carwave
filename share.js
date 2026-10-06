@@ -27,7 +27,26 @@
     $('#title').textContent = title || '';
     $('#subtitle').textContent = subtitle || '';
     document.title = (title ? title + ' · ' : '') + 'CarWave';
-    if (image) { var img = $('#art'); img.src = image; img.style.display = 'block'; }
+    showArt(image, title);
+  }
+
+  // Dizindeki logoların bir kısmı ölü, http ya da HTML'i kaçışlı (&amp;) adres: uygulamadaki gibi önce yer tutucu
+  // (adın baş harfi) görünür, logo gerçekten inerse yerini alır. Bozuk görsel simgesi hiç görünmez.
+  function showArt(image, title) {
+    var holder = $('#placeholder');
+    holder.textContent = (title || '').trim().charAt(0).toLocaleUpperCase() || '♪';
+    holder.style.display = 'flex';
+    if (!image) return;
+    var url = image.replace(/&amp;/g, '&').replace(/^http:\/\//i, 'https://');
+    var img = $('#art');
+    img.onload = function () {
+      // Favicon'lar çoğu zaman çok küçük: 32 pikselin altını büyütmek yerine yer tutucu kalır.
+      if (img.naturalWidth < 32) return;
+      holder.style.display = 'none';
+      img.style.display = 'block';
+    };
+    img.onerror = function () { img.style.display = 'none'; };
+    img.src = url;
   }
 
   if (kind === 's') {

@@ -9,9 +9,17 @@
   body { font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; max-width: 720px; margin: 0 auto; padding: 32px 20px 64px; }
   h1 { font-size: 32px; margin-bottom: 4px; } h2 { font-size: 21px; margin-top: 32px; }
   .muted { opacity: .65; } a { color: var(--accent); } hr { margin: 48px 0; border: 0; border-top: 1px solid #8884; }
+  .langs { display: flex; justify-content: flex-end; gap: 4px; margin-bottom: 8px; }
+  .langs button { font: 600 13px/1 -apple-system, BlinkMacSystemFont, sans-serif; padding: 7px 12px; border-radius: 999px;
+    border: 1px solid #8884; background: none; color: inherit; cursor: pointer; }
+  .langs button.on { background: var(--accent); border-color: var(--accent); color: #111; }
+  html[lang="tr"] article[lang="en"], html[lang="en"] article[lang="tr"] { display: none; }
 </style>
 </head>
 <body>
+<div class="langs"><button data-set="en">EN</button><button data-set="tr">TR</button></div>
+
+<article lang="en">
 <h1>CarWave – Privacy Policy</h1>
 <p class="muted">Last updated: 2 October 2026 · PHI SOFTWARE</p>
 
@@ -50,9 +58,10 @@
 <h2>Contact</h2>
 <p>Questions: <a href="mailto:info@phisoftware.com.tr">info@phisoftware.com.tr</a></p>
 
-<hr>
+</article>
 
-<h1 lang="tr">CarWave – Gizlilik Politikası</h1>
+<article lang="tr">
+<h1>CarWave – Gizlilik Politikası</h1>
 <p class="muted">Son güncelleme: 2 Ekim 2026 · PHI SOFTWARE</p>
 
 <p>CarWave bir radyo uygulamasıdır. Kullanıcı hesabı yoktur; reklam göstermeyiz, seni başka uygulama ve sitelerde takip etmeyiz, kişisel veri satmayız veya paylaşmayız. Uygulamayı geliştirmek için anonim çökme raporları ve kullanım istatistikleri toplarız (aşağıda).</p>
@@ -89,5 +98,17 @@
 
 <h2>İletişim</h2>
 <p>Sorular için: <a href="mailto:info@phisoftware.com.tr">info@phisoftware.com.tr</a></p>
+</article>
+
+<script>
+  // Dil: kayıtlı seçim, yoksa tarayıcı dili (Türkçe → tr, diğerleri → en).
+  const set = l => { document.documentElement.lang = l;
+    document.querySelectorAll('.langs button').forEach(b => b.classList.toggle('on', b.dataset.set === l));
+    try { localStorage.setItem('lang', l) } catch (e) {} };
+  let saved = null; try { saved = localStorage.getItem('lang') } catch (e) {}
+  const browser = (navigator.language || 'en').toLowerCase().startsWith('tr') ? 'tr' : 'en';
+  set(saved === 'tr' || saved === 'en' ? saved : browser);
+  document.querySelectorAll('.langs button').forEach(b => b.onclick = () => set(b.dataset.set));
+</script>
 </body>
 </html>
